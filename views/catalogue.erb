@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Catalogue Management</title>
+		<meta name="description" content="Blueprint: Nested Accordion" />
+		<meta name="keywords" content="nested, accordion, simple, vertical, web development, css3, javascript" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="/css/default.css" />
+		<link rel="stylesheet" type="text/css" href="/css/component.css" />
+		<script src="js/modernizr.custom.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<header class="clearfix">
+				<h1>Catalogue Management</h1>
+<!-- 				<nav>
+					<a href="http://tympanus.net/Blueprints/VerticalIconMenu/" class="icon-arrow-left" data-info="previous Blueprint">Previous Blueprint</a>
+					<a href="http://tympanus.net/codrops/?p=14588" class="icon-drop" data-info="back to the Codrops article">back to the Codrops article</a>
+				</nav> -->
+			</header>	
+			<div class="main">
+				<ul id="cbp-ntaccordion" class="cbp-ntaccordion">
+					<li>
+						<h3 class="cbp-nttrigger">Oat cake tootsie roll</h3>
+						<div class="cbp-ntcontent">
+							<p>top</p>
+							<img src="http://www.w3schools.com/html/pic_mountain.jpg" alt="Mountain View" style="width:304px;height:228px;">
+							<ul class="cbp-ntsubaccordion">
+								<li>
+									<h4 class="cbp-nttrigger">Donut pastry</h4>
+									<div class="cbp-ntcontent">
+										<p> sub </p>
+									</div>
+								</li>
+								<li>
+									<h4 class="cbp-nttrigger">Carrot cake</h4>
+									<div class="cbp-ntcontent">
+										<p> sub sub</p>
+										<ul class="cbp-ntsubaccordion">
+											<li>
+												<h5 class="cbp-nttrigger">Tootsie roll marshmallow</h5>
+												<div class="cbp-ntcontent">
+													<p> sub sub </p>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</li>					
+				</ul>
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="/js/jquery.cbpNTAccordion.min.js"></script>
+		<script>
+			$( function() {
+				/*
+				- how to call the plugin:
+				$( selector ).cbpNTAccordion( [options] );
+				- destroy:
+				$( selector ).cbpNTAccordion( 'destroy' );
+				*/
+
+				$( '#cbp-ntaccordion' ).cbpNTAccordion();
+
+			} );
+		</script>
+	</body>
+</html>
