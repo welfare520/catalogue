@@ -11,65 +11,313 @@
 		<link rel="shortcut icon" href="../favicon.ico">
 		<link rel="stylesheet" type="text/css" href="/css/default.css" />
 		<link rel="stylesheet" type="text/css" href="/css/component.css" />
-		<script src="js/modernizr.custom.js"></script>
+	    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">   
+	    <link rel="stylesheet" href="/css/dialog.css">             
+
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
+
+        <script src="/js/jquery.cbpNTAccordion.min.js"></script>
+		<script src="/js/modernizr.custom.js"></script> 	
+		<script src="/js/catalogue.js"></script> 
 	</head>
 	<body>
 		<div class="container">
 			<header class="clearfix">
 				<h1>Catalogue Management</h1>
+				<p style="margin-left:25em;">Version 1.0   Last Modified: 2008-08-08</p> 
 <!-- 				<nav>
 					<a href="http://tympanus.net/Blueprints/VerticalIconMenu/" class="icon-arrow-left" data-info="previous Blueprint">Previous Blueprint</a>
 					<a href="http://tympanus.net/codrops/?p=14588" class="icon-drop" data-info="back to the Codrops article">back to the Codrops article</a>
 				</nav> -->
 			</header>	
+
+			<% catalogue.content.each do |category| %>
+				<div id="dialog_edit_<%=category["id"]%>" title="Edit category" style="display:none">
+					<table width="100%">
+					  <tr>
+					    <td valign="top">Category Details 
+					       <p> 
+							  <form enctype="multipart/form-data">
+							      <div class="category-name">Category ID: <%=category["id"]%></div> 
+							      <br>
+								  <div class="category-name">Display Name: </div> 
+								  <input type="text" name="l" id="name_<%=category["id"]%>" value=<%=category["name"]%> size="35"/>
+								  <br>
+								  <div class="category-name">Description: </div>  
+								  <textarea id="desc_<%=category["id"]%>" style="width:400px;height:50px;"><%=category["description"]%></textarea>
+								  <br> 
+								  <div class="category-name">Translation EN </div>  
+								  <input type="text" name="l" id="name_en_<%=category["id"]%>" value=<%=category["name_en"]%> size="35">
+								  <br> 
+								    <div class="category-name">Translation ES </div>  
+								    <input type="text" name="l" id="name_es_<%=category["id"]%>" value=<%=category["name_es"]%> size="35">
+		                            <br> <div class="category-name"> Category Type: </div> 
+		                            <select id="type_<%=category["id"]%>">
+										<option value ="general" <%='selected ="selected"' if category["type"] == "general" or category["type"].nil? %> >general</option>
+										<option value ="have" <%='selected ="selected"' if category["type"] == "have"%> >have only </option>
+										<option value ="need" <%='selected ="selected"' if category["type"] == "need"%>>need only</option>
+									</select>
+									<br>	
+								    <button type="button" onclick="saveData('<%=category["id"]%>')" >Save</button>
+								    </form>
+							    </p>
+
+					    </td>
+					    <td width="80" valign="top">
+					        <img src="/icon/<%=category['id']%>.jpg" alt="cloth" style="width:240px;height:240px;"
+					             id = "img_<%=category['id']%>">
+					        <br>
+					        Change Icon				      	
+							<form enctype="multipart/form-data" >
+								<input id="icon_<%=category['id']%>" type="file" name="icon_name" onchange="updateIcon(<%=category['id']%>); return false;"/>	
+							</form> 
+					    </td>
+					  </tr>
+					</table>
+				</div>
+
+
+				<div id="dialog_move_<%=category["id"]%>" title="Move category" style="display:none">
+					<form>
+					    Category Name: <%=category["name"]%>
+					    <br>
+					    Enter parent category ID: 
+					    <form>	
+						    <input type="text" id="move2id_<%=category["id"]%>" size="15"/>
+						    <button type="button" onclick="moveId('<%=category["id"]%>')" >Move</button>
+					    </form> 
+					</form> 
+				</div>
+
+				<div id="dialog_delete_<%=category["id"]%>" title="Move category" style="display:none">
+					<form>
+					    Category <%=category["name"]%> will be removed 
+					    <br>
+					    <form>	
+						    <button type="button" onclick="deleteId('<%=category["id"]%>')" >Confirm</button>
+					    </form> 
+					</form> 
+				</div>
+
+
+			<% end %>
+
+
 			<div class="main">
 				<ul id="cbp-ntaccordion" class="cbp-ntaccordion">
-					<li>
-						<h3 class="cbp-nttrigger">Oat cake tootsie roll</h3>
-						<div class="cbp-ntcontent">
-							<p>top</p>
-							<img src="http://www.w3schools.com/html/pic_mountain.jpg" alt="Mountain View" style="width:304px;height:228px;">
-							<ul class="cbp-ntsubaccordion">
-								<li>
-									<h4 class="cbp-nttrigger">Donut pastry</h4>
-									<div class="cbp-ntcontent">
-										<p> sub </p>
-									</div>
-								</li>
-								<li>
-									<h4 class="cbp-nttrigger">Carrot cake</h4>
-									<div class="cbp-ntcontent">
-										<p> sub sub</p>
-										<ul class="cbp-ntsubaccordion">
-											<li>
-												<h5 class="cbp-nttrigger">Tootsie roll marshmallow</h5>
-												<div class="cbp-ntcontent">
-													<p> sub sub </p>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</li>					
-				</ul>
+					
+					<% catalogue.content.each do |category| %> 					    
+						<% if category["parent"] == "root" %>
+						<li>
+					    	<h3 class="cbp-nttrigger">
+								<img id='img_<%=category["id"]%>' src="/icon/<%=category['id']%>.jpg" alt="cloth" style="width:64px;height:62px;"> <%=category["name"]%>
+							</h3>
+
+							<div class="cbp-ntcontent">
+
+							    <script type="text/javascript">
+							        // function for edit button 
+							        $(function() {
+									    $( "#dialog_edit_<%=category["id"]%>" ).dialog({
+									      width: 1000,
+									      height: 600,
+									      autoOpen: false,
+									      modal: true,
+									      show: {
+									        effect: "blind",
+									        duration: 200
+									      },
+									      hide: {
+									        effect: "explode",
+									        duration: 200
+									      }
+									    });
+									 
+									    $( "#edit_<%=category["id"]%>" ).click(function() {
+									      $( "#dialog_edit_<%=category["id"]%>" ).dialog( "open" );
+									    });
+									});
+
+									// function for move button 
+							        $(function() {
+									    $( "#dialog_move_<%=category["id"]%>" ).dialog({
+									      width: 600,
+									      height: 300,
+									      autoOpen: false,
+									      modal: true,
+									      show: {
+									        effect: "blind",
+									        duration: 200
+									      },
+									      hide: {
+									        effect: "explode",
+									        duration: 200
+									      }
+									    });
+									 
+									    $( "#move_<%=category["id"]%>" ).click(function() {
+									      $( "#dialog_move_<%=category["id"]%>" ).dialog( "open" );
+									    });
+									});
+
+									// function for delete button 
+							        $(function() {	
+									    $( "#dialog_delete_<%=category["id"]%>" ).dialog({
+									      width: 300,
+									      height: 200,
+									      autoOpen: false,
+									      modal: true,
+									      show: {
+									        effect: "blind",
+									        duration: 200
+									      },
+									      hide: {
+									        effect: "explode",
+									        duration: 200
+									      }
+									    });								 
+									    $( "#delete_<%=category["id"]%>" ).click(function() {
+									      $( "#dialog_delete_<%=category["id"]%>" ).dialog( "open" );
+									    });
+									});
+							    </script>
+
+								<p> 
+									<button id="edit_<%=category["id"]%>">Edit</button> 
+									<button id="move_<%=category["id"]%>">Move</button> 
+									<button id="delete_<%=category["id"]%>">Delete</button> 
+									<button id="add_<%=category["id"]%>">Add Subcategory</button>
+								</p>
+
+								<ul class="cbp-ntsubaccordion">
+
+							    <% catalogue.content.each do |sub| %> 
+							        <% if sub["parent"] == category["id"] %>
+
+
+										<li>
+											<h4 class="cbp-nttrigger">
+												<img id='img_<%=sub["id"]%>' src="/icon/<%=sub['id']%>.jpg" alt="cloth" style="width:64px;height:64px;"> <%=sub["name"]%>
+											</h4>
+											<div class="cbp-ntcontent">
+											    <script type="text/javascript">
+											        // function for edit button 
+											        $(function() {
+													    $( "#dialog_edit_<%=sub["id"]%>" ).dialog({
+													      width: 1000,
+													      height: 600,
+													      autoOpen: false,
+													      modal: true,
+													      show: {
+													        effect: "blind",
+													        duration: 200
+													      },
+													      hide: {
+													        effect: "explode",
+													        duration: 200
+													      }
+													    });
+													 
+													    $( "#edit_<%=sub["id"]%>" ).click(function() {
+													      $( "#dialog_edit_<%=sub["id"]%>" ).dialog( "open" );
+													    });
+													});
+
+													// function for move button 
+											        $(function() {
+													    $( "#dialog_move_<%=sub["id"]%>" ).dialog({
+													      width: 600,
+													      height: 300,
+													      autoOpen: false,
+													      modal: true,
+													      show: {
+													        effect: "blind",
+													        duration: 200
+													      },
+													      hide: {
+													        effect: "explode",
+													        duration: 200
+													      }
+													    });
+													 
+													    $( "#move_<%=sub["id"]%>" ).click(function() {
+													      $( "#dialog_move_<%=sub["id"]%>" ).dialog( "open" );
+													    });
+													});
+
+													// function for delete button 
+											        $(function() {	
+													    $( "#dialog_delete_<%=sub["id"]%>" ).dialog({
+													      width: 300,
+													      height: 200,
+													      autoOpen: false,
+													      modal: true,
+													      show: {
+													        effect: "blind",
+													        duration: 200
+													      },
+													      hide: {
+													        effect: "explode",
+													        duration: 200
+													      }
+													    });								 
+													    $( "#delete_<%=sub["id"]%>" ).click(function() {
+													      $( "#dialog_delete_<%=sub["id"]%>" ).dialog( "open" );
+													    });
+													});
+											    </script>
+												<p> 
+													<button id="edit_<%=sub["id"]%>">Edit</button> 
+													<button id="move_<%=sub["id"]%>">Move</button> 
+													<button id="delete_<%=sub["id"]%>">Delete</button> 
+													<button id="add_<%=sub["id"]%>">Add Subcategory</button>
+												</p>
+											
+
+
+	                                        <ul class="cbp-ntsubaccordion">
+
+		        						    <% catalogue.content.each do |subsub| %>
+		        						        <% if subsub["parent"] == sub["id"] %>
+														<li>
+															<h5 class="cbp-nttrigger">Tootsie roll marshmallow</h5>
+															<div class="cbp-ntcontent">
+																<p> sub sub </p>
+															</div>
+														</li>
+											    <% end %>
+										    <% end %>
+	                                        </ul>
+                                        
+                                        </div>
+										</li>
+
+
+							        <% end %>
+							    <% end %>
+						        </ul>
+                               
+										
+									
+
+
+								</div>
+	                        </li>	
+
+						<% end %>
+					<% end %>
+					</ul>
+
+
+
+
+
+
+									
+				
 			</div>
 		</div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src="/js/jquery.cbpNTAccordion.min.js"></script>
-		<script>
-			$( function() {
-				/*
-				- how to call the plugin:
-				$( selector ).cbpNTAccordion( [options] );
-				- destroy:
-				$( selector ).cbpNTAccordion( 'destroy' );
-				*/
 
-				$( '#cbp-ntaccordion' ).cbpNTAccordion();
-
-			} );
-		</script>
-	</body>
+        
 </html>

@@ -12,6 +12,10 @@ class ApplicationController < Sinatra::Application
     def auth_config
       settings.auth_config
     end
+
+    def catalogue
+      @catalogue ||= Catalogue.load_from_file("./data/catalogue.json")
+    end
   end
 
   use Rack::Auth::Basic, "Restricted Area" do |username, password|
@@ -20,8 +24,8 @@ class ApplicationController < Sinatra::Application
 
   namespace '/' do
 
-    get do
-      erb :catalogue
+    get do      
+      erb :catalogue, :locals => {:catalogue => catalogue}
       # catalogue = load_catalogue(es_config.catalogue_client, es_config.catalogue_index)
       # catalogue.catalogue.delete_if {|key, value| value.status != 'active' || value.category.size > 3}
       # catalogue.add_subcategories
@@ -29,8 +33,33 @@ class ApplicationController < Sinatra::Application
       # erb :accordion, :locals => {:catalogue => catalogue, :es_host => es_config.catalogue_host}
     end
 
+    get 'icon/:icon' do
+      File.read("./public/icon/#{params[:icon]}")
+    end 
+
+    post 'category/:id/update' do 
+
+      unless params[:parent].nil? 
+        params[:parent] = "root" if catalogue.content.find {|entry| params[:parent] == entry["id"]}.empty? 
+      end
+      category = Category.new(params)
+
+      catalogue.update_category(category)
+      catalogue.save_to_file("./data/catalogue.json") 
+      "saved"
+    end
+
+    post 'upload/:id/icon' do 
+      file_ext = File.extname(params[:data][:filename])  
+      filename = params["id"] + file_ext
+      File.open('./public/icon/' + filename, "w") do |f|
+        f.write(params[:data][:tempfile].read)
+      end
+      "file uploaded"
+    end
+
     # get 'all' do
-    #   catalogue = load_catalogue(es_config.catalogue_client, es_config.catalogue_index)
+    #   catalogue = load_catalogue(es_configd.catalogue_client, es_config.catalogue_index)
     #   catalogue.catalogue.delete_if {|key, value| value.category.size > 3}
     #   catalogue.add_subcategories
     #   catalogue.add_entry_hash
