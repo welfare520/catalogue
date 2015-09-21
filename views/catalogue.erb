@@ -110,9 +110,11 @@
 					<% catalogue.content.each do |category| %> 					    
 						<% if category["parent"] == "root" %>
 						<li>
-					    	<h3 class="cbp-nttrigger">
-								<img id='img_<%=category["id"]%>' src="/icon/<%=category['id']%>.jpg" alt="cloth" style="width:64px;height:62px;"> <%=category["name"]%>
-							</h3>
+					    	<h3 class="cbp-nttrigger" style="display:inline;">
+								<img id='img_<%=category["id"]%>' src="/icon/<%=category['id']%>.jpg" alt="cloth" 
+								     style="width:48px;height:48px;"> <%=category["name"]%>	
+							</h3>	
+							<button id="edit_<%=category["id"]%>">Edit</button> 				
 
 							<div class="cbp-ntcontent">
 
@@ -135,7 +137,7 @@
 									    });
 									 
 									    $( "#edit_<%=category["id"]%>" ).click(function() {
-									      $( "#dialog_edit_<%=category["id"]%>" ).dialog( "open" );
+												   $( "#dialog_edit_<%=category["id"]%>" ).dialog( "open" );								      
 									    });
 									});
 
@@ -184,7 +186,7 @@
 							    </script>
 
 								<p> 
-									<button id="edit_<%=category["id"]%>">Edit</button> 
+									<!-- <button id="edit_<%=category["id"]%>">Edit</button> -->
 									<button id="move_<%=category["id"]%>">Move</button> 
 									<button id="delete_<%=category["id"]%>">Delete</button> 
 									<button id="add_<%=category["id"]%>">Add Subcategory</button>
@@ -268,7 +270,7 @@
 													});
 											    </script>
 												<p> 
-													<button id="edit_<%=sub["id"]%>">Edit</button> 
+													<!-- <button id="edit_<%=sub["id"]%>">Edit</button>  -->
 													<button id="move_<%=sub["id"]%>">Move</button> 
 													<button id="delete_<%=sub["id"]%>">Delete</button> 
 													<button id="add_<%=sub["id"]%>">Add Subcategory</button>
