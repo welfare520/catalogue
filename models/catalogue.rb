@@ -20,6 +20,14 @@ class Catalogue
 		end
 	end
 
+	def add_category(category)
+		cat_new = {}
+		Hash[category.attributes.map{ |k, v| [k.to_s, v] }].each do |k, v|
+			cat_new[k] = v unless v.nil?   
+		end	
+		content << cat_new
+	end
+
 	def update_category(category)
 		category_index = content.find_index {|entry| entry["id"] == category[:id]}
 		Hash[category.attributes.map{ |k, v| [k.to_s, v] }].each do |k, v|

@@ -4,6 +4,7 @@ class ApplicationController < Sinatra::Application
   set :public_folder, File.dirname(__FILE__) + '/../public' 
   set :views, File.expand_path('../../views', __FILE__)
   set :auth_config, AuthConfig.new
+  set :environment, :production
   enable :static
 
   helpers ApplicationHelpers
@@ -38,13 +39,30 @@ class ApplicationController < Sinatra::Application
     end 
 
     post 'category/:id/update' do 
-
       unless params[:parent].nil? 
-        params[:parent] = "root" if catalogue.content.find {|entry| params[:parent] == entry["id"]}.empty? 
+        p_entry = catalogue.content.find {|entry| params[:parent] == entry["id"]}
+        if p_entry.nil? 
+          params[:parent] = "0"
+        else
+          params[:parent] = p_entry["id"]
+        end        
       end
+
+      puts params.inspect 
       category = Category.new(params)
 
       catalogue.update_category(category)
+      catalogue.save_to_file("./data/catalogue.json") 
+      "saved"
+    end
+
+    post 'category/:id/addchild' do
+      category = Category.new({
+        :parent => params[:id],
+        :name => params[:name],
+        :id =>  Random.rand(10000000000...99999999999).to_s 
+        })
+      catalogue.add_category(category)
       catalogue.save_to_file("./data/catalogue.json") 
       "saved"
     end

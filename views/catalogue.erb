@@ -90,12 +90,23 @@
 					</form> 
 				</div>
 
-				<div id="dialog_delete_<%=category["id"]%>" title="Move category" style="display:none">
+				<div id="dialog_delete_<%=category["id"]%>" title="Delete category" style="display:none">
 					<form>
 					    Category <%=category["name"]%> will be removed 
 					    <br>
 					    <form>	
 						    <button type="button" onclick="deleteId('<%=category["id"]%>')" >Confirm</button>
+					    </form> 
+					</form> 
+				</div>
+
+				<div id="dialog_add_<%=category["id"]%>" title="Add new sub-category" style="display:none">
+					<form> 
+					    <br>
+					    Enter sub-category name: 
+					    <form>	
+					        <input type="text" id="addsub_<%=category["id"]%>" size="15"/>
+						    <button type="button" onclick="addCategory('<%=category["id"]%>')" >Confirm</button>
 					    </form> 
 					</form> 
 				</div>
@@ -108,7 +119,7 @@
 				<ul id="cbp-ntaccordion" class="cbp-ntaccordion">
 					
 					<% catalogue.content.each do |category| %> 					    
-						<% if category["parent"] == "root" %>
+						<% if category["parent"] == "0" %>
 						<li>
 					    	<h3 class="cbp-nttrigger">
 								<img id='img_<%=category["id"]%>' src="/icon/<%=category['id']%>.jpg" alt="cloth" style="width:64px;height:62px;"> <%=category["name"]%>
@@ -179,6 +190,27 @@
 									    });								 
 									    $( "#delete_<%=category["id"]%>" ).click(function() {
 									      $( "#dialog_delete_<%=category["id"]%>" ).dialog( "open" );
+									    });
+									});
+
+									// function for add button 
+							        $(function() {	
+									    $( "#dialog_add_<%=category["id"]%>" ).dialog({
+									      width: 300,
+									      height: 200,
+									      autoOpen: false,
+									      modal: true,
+									      show: {
+									        effect: "blind",
+									        duration: 200
+									      },
+									      hide: {
+									        effect: "explode",
+									        duration: 200
+									      }
+									    });								 
+									    $( "#add_<%=category["id"]%>" ).click(function() {
+									      $( "#dialog_add_<%=category["id"]%>" ).dialog( "open" );
 									    });
 									});
 							    </script>

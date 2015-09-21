@@ -11,7 +11,7 @@ function saveData(selectObj){
     'name': NameObj.value.toString(),
     'name_en': NameENObj.value.toString(),
     'name_es': NameESObj.value.toString(),
-    'desc': DescObj.value.toString(),
+    'description': DescObj.value.toString(),
     'type': TypeObj.value.toString()
     }, function(response){ 
 
@@ -44,6 +44,19 @@ function moveId(selectObj){
 
   $( "#dialog_move_"+selectObj).dialog( "close" );
   location.reload(false);
+}
+
+function addCategory(selectObj){
+    var nameChild=document.getElementById("addsub_"+selectObj).value.toString();
+    $.post('/category/'+selectObj+'/addchild', {
+            "id": selectObj,
+            "name": nameChild
+        }, function(response){ 
+
+    });
+
+    $( "#dialog_add_"+selectObj).dialog( "close" );
+    location.reload(false);
 }
 
 function updateIcon(id) {
