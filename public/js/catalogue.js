@@ -1,23 +1,27 @@
-function saveData(selectObj){
+function saveData(thisObj){
+  var selectObj = thisObj.value.toString(); 
   var NameObj=document.getElementById("name_"+selectObj);
   var NameENObj=document.getElementById("name_en_"+selectObj);
   var NameESObj=document.getElementById("name_es_"+selectObj);
   var DescObj=document.getElementById("desc_"+selectObj);
   var TypeObj=document.getElementById("type_"+selectObj);
   var IconObj=document.getElementById("icon_"+selectObj);
+  var PriceObj = document.getElementById("price_"+selectObj);
 
- 
+  var price = PriceObj.value || 10;
+
   $.post('/category/'+selectObj+'/update', {
     'name': NameObj.value.toString(),
     'name_en': NameENObj.value.toString(),
     'name_es': NameESObj.value.toString(),
     'description': DescObj.value.toString(),
-    'type': TypeObj.value.toString()
+    'type': TypeObj.value.toString(),
+    'price': price
     }, function(response){ 
 
      });
 
-  $( "#dialog_edit_"+selectObj).dialog( "close" );
+  $( "#edit-dialog-"+selectObj).dialog( "close" );
 
 }
 
@@ -75,15 +79,113 @@ function updateIcon(id) {
         processData: false,
         url: '/upload/'+id+'/icon',
         data: fd,
-        dataType: 'jpg',
-        success: function (data) {
-            alert('success');
-            return false;
-        }
+        success: function (data) {            
+            d = new Date();
+            $("#img_"+id).attr("src", "/icon/" + id + ".jpg?"+new Date().getTime());
+            window.alert("Icon Uploaded");
+            return true; 
+        },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
     });
-
-    window.alert("Icon Uploaded");
 }
+
+
+// function for edit button 
+$( function() {
+
+    $( ".edit-dialog").dialog({
+      width: 1000,
+      height: 600,
+      autoOpen: false,
+      modal: true,
+      show: {
+        effect: "blind",
+        duration: 200
+      },
+      hide: {
+        effect: "explode",
+        duration: 200
+      }
+    });
+ 
+    $( '.edit-category' ).click(function() {
+            var Id = this.value.toString()
+            $( "#edit-dialog-" + Id).dialog( "open" );                                      
+    });
+});
+
+
+// function for move button 
+$(function() {
+    $( ".move-dialog" ).dialog({
+      width: 600,
+      height: 300,
+      autoOpen: false,
+      modal: true,
+      show: {
+        effect: "blind",
+        duration: 200
+      },
+      hide: {
+        effect: "explode",
+        duration: 200
+      }
+    });
+ 
+    $( ".move-category" ).click(function() {
+        var Id = this.value.toString()
+        $( "#move-dialog-"+Id ).dialog( "open" );
+    });
+});
+
+
+// function for delete button 
+$(function() {  
+    $( ".delete-dialog" ).dialog({
+      width: 300,
+      height: 200,
+      autoOpen: false,
+      modal: true,
+      show: {
+        effect: "blind",
+        duration: 200
+      },
+      hide: {
+        effect: "explode",
+        duration: 200
+      }
+    });                              
+    $( ".delete-category" ).click(function() {
+        var Id = this.value.toString()
+        $( "#delete-dialog-"+Id ).dialog( "open" );
+    });
+});
+
+
+// function for add button 
+$(function() {  
+    $( ".add-dialog" ).dialog({
+      width: 300,
+      height: 200,
+      autoOpen: false,
+      modal: true,
+      show: {
+        effect: "blind",
+        duration: 200
+      },
+      hide: {
+        effect: "explode",
+        duration: 200
+      }
+    });                              
+    $( ".add-category" ).click(function() {
+        var Id = this.value.toString()
+        $( "#add-dialog-"+Id ).dialog( "open" );
+    });
+});
 
 
 $( function() {

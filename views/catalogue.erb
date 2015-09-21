@@ -122,11 +122,15 @@
 						<% if category["parent"] == "0" %>
 						<li>
 					    	<h3 class="cbp-nttrigger" style="display:inline;">
-								<img id='img_<%=category["id"]%>' src="/icon/<%=category['id']%>.jpg" alt="cloth" 
+					    	<span style="width:350px;display:inline-block">
+					    		<img id='img_<%=category["id"]%>' src="/icon/<%=category['id']%>.jpg" alt="cloth" 
 								     style="width:48px;height:48px;"> <%=category["name"]%>	
+					    	</span>								
 							</h3>	
-							<button id="edit_<%=category["id"]%>">Edit</button> 				
-
+							<button id="edit_<%=category["id"]%>">Edit</button> 
+							<button id="move_<%=category["id"]%>">Move</button> 				
+							<button id="delete_<%=category["id"]%>">Delete</button> 
+							<button id="add_<%=category["id"]%>">Add Sub</button>
 							<div class="cbp-ntcontent">
 
 							    <script type="text/javascript">
@@ -217,13 +221,6 @@
 									});
 							    </script>
 
-								<p> 
-									<!-- <button id="edit_<%=category["id"]%>">Edit</button> -->
-									<button id="move_<%=category["id"]%>">Move</button> 
-									<button id="delete_<%=category["id"]%>">Delete</button> 
-									<button id="add_<%=category["id"]%>">Add Subcategory</button>
-								</p>
-
 								<ul class="cbp-ntsubaccordion">
 
 							    <% catalogue.content.each do |sub| %> 
@@ -232,7 +229,7 @@
 
 										<li>
 											<h4 class="cbp-nttrigger">
-												<img id='img_<%=sub["id"]%>' src="/icon/<%=sub['id']%>.jpg" alt="cloth" style="width:64px;height:64px;"> <%=sub["name"]%>
+												<img id='img_<%=sub["id"]%>' src="/icon/<%=sub['id']%>.jpg" alt="cloth" style="width:48px;height:48px;"> <%=sub["name"]%>
 											</h4>
 											<div class="cbp-ntcontent">
 											    <script type="text/javascript">
@@ -302,10 +299,10 @@
 													});
 											    </script>
 												<p> 
-													<!-- <button id="edit_<%=sub["id"]%>">Edit</button>  -->
+													<button id="edit_<%=sub["id"]%>">Edit</button> 
 													<button id="move_<%=sub["id"]%>">Move</button> 
 													<button id="delete_<%=sub["id"]%>">Delete</button> 
-													<button id="add_<%=sub["id"]%>">Add Subcategory</button>
+													<button id="add_<%=sub["id"]%>">Add Sub</button>
 												</p>
 											
 
