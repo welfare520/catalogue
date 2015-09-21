@@ -8,7 +8,8 @@ class Category
 	attribute :name_en, String
 	attribute :name_es, String
 	attribute :description, String 
-	attribute :type, String 
+	attribute :type, String
+	attribute :price, Float
 
 	attribute :parent, String
 	attribute :pic, String

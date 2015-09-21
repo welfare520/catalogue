@@ -26,16 +26,12 @@ class ApplicationController < Sinatra::Application
   namespace '/' do
 
     get do      
-      erb :catalogue, :locals => {:catalogue => catalogue}
-      # catalogue = load_catalogue(es_config.catalogue_client, es_config.catalogue_index)
-      # catalogue.catalogue.delete_if {|key, value| value.status != 'active' || value.category.size > 3}
-      # catalogue.add_subcategories
-      # catalogue.add_entry_hash
-      # erb :accordion, :locals => {:catalogue => catalogue, :es_host => es_config.catalogue_host}
+      erb :beamer, :locals => {:catalogue => catalogue}
     end
 
     get 'icon/:icon' do
-      File.read("./public/icon/#{params[:icon]}")
+      File.exist?('./public/icon/#{params[:icon]}') ? File.read("./public/icon/#{params[:icon]}") : File.read("./public/icon/default.jpg")
+
     end 
 
     post 'category/:id/update' do 
@@ -43,12 +39,13 @@ class ApplicationController < Sinatra::Application
         p_entry = catalogue.content.find {|entry| params[:parent] == entry["id"]}
         if p_entry.nil? 
           params[:parent] = "0"
+        elsif params[:parent] == params[:id]
+          raise "same parent and child"
         else
           params[:parent] = p_entry["id"]
         end        
       end
-
-      puts params.inspect 
+      params[:price] = params[:price].to_f 
       category = Category.new(params)
 
       catalogue.update_category(category)
@@ -73,37 +70,8 @@ class ApplicationController < Sinatra::Application
       File.open('./public/icon/' + filename, "w") do |f|
         f.write(params[:data][:tempfile].read)
       end
-      "file uploaded"
+      halt 200, "file uploaded"    
     end
-
-    # get 'all' do
-    #   catalogue = load_catalogue(es_configd.catalogue_client, es_config.catalogue_index)
-    #   catalogue.catalogue.delete_if {|key, value| value.category.size > 3}
-    #   catalogue.add_subcategories
-    #   catalogue.add_entry_hash
-    #   erb :accordion, :locals => {:catalogue => catalogue, :es_host => es_config.catalogue_host}
-    # end
-
-    # get 'planned' do
-    #   catalogue = load_catalogue(es_config.catalogue_client, es_config.catalogue_index)
-    #   catalogue.catalogue.delete_if {|key, value| value.status != 'planned' || value.category.size > 3}
-    #   catalogue.add_subcategories
-    #   catalogue.add_entry_hash
-    #   erb :accordion, :locals => {:catalogue => catalogue, :es_host => es_config.catalogue_host}
-    # end
-
-    # post 'category/:id/' do
-    #   hash = {
-    #           :id => params[:id],
-    #           :type => params[:type],
-    #           :description => params[:desc]
-    #          }
-    #   entry = CatalogueEntry.new(hash)
-    #   entry.check_type
-    #   CategoryStore.update_category(entry)
-    #   status 200
-    #   body "Data have been saved!"
-    # end
+ 
   end
-
 end
