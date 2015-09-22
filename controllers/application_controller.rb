@@ -30,28 +30,35 @@ class ApplicationController < Sinatra::Application
     end
 
     get 'icon/:icon' do
-      puts "./public/upload/icon/#{params[:icon]}"
-      puts File.exist?("./public/upload/icon/#{params[:icon]}") 
       File.exist?("./public/upload/icon/#{params[:icon]}") ? File.read("./public/upload/icon/#{params[:icon]}") : File.read("./public/upload/icon/default.jpg")
     end 
 
     post 'category/:id/update' do 
-      unless params[:parent].nil? 
-        p_entry = catalogue.content.find {|entry| params[:parent] == entry["id"]}
-        if p_entry.nil? 
-          params[:parent] = "0"
-        elsif params[:parent] == params[:id]
-          raise "same parent and child"
-        else
-          params[:parent] = p_entry["id"]
-        end        
-      end
-      params[:price] = params[:price].to_f 
-      category = Category.new(params)
+      begin 
+        unless params[:parent].nil? 
+          p_entry = catalogue.content.find {|entry| params[:parent] == entry["id"]}
+          if p_entry.nil? 
+            params[:parent] = "0"
+          elsif params[:parent] == params[:id]
+            raise "same parent and child"
+          else
+            params[:parent] = p_entry["id"]
+          end  
 
-      catalogue.update_category(category)
-      catalogue.save_to_file("./data/catalogue.json") 
-      "saved"
+          catalogue.check_parent(category.id, category.parent)      
+        end
+        params[:price] = params[:price].to_f 
+        params[:status] ||= "active"
+
+        category = Category.new(params)        
+
+        catalogue.update_category(category)
+        catalogue.save_to_file("./data/catalogue.json") 
+        "saved"
+      rescue 
+        halt 400, "bad request"
+      end
+
     end
 
     post 'category/:id/addchild' do
