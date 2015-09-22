@@ -1,6 +1,7 @@
-{"id":"1","name":"Kleidung","description":"Bekleidung für Damen","parent":"root","name_en":"Clothes","name_es":"Ropa","pic":null,"type":"have","status":"deleted"}
+{"id":"1","name":"Kleidung","description":"Bekleidung für Damen","parent":"0","name_en":"Clothes","name_es":"Ropa","pic":null,"type":"have","status":"deleted","price":10.0}
 {"id":"11","name":"NIKE","description":"sub1","parent":"1","type":"general","status":"active","name_en":"BMW","name_es":"BMW"}
-{"id":"12","name":"Zara","description":"sub2","parent":"1","status":"active","name_en":"Zara","name_es":"Zara","type":"general"}
-{"id":"2","name":"Auto","description":"write something ","parent":"root","name_en":"Car","name_es":"wagon","pic":null,"type":"general","status":"active"}
-{"id":"13","name":"VW","description":"sub1","parent":"2","status":"active","name_en":"VW","name_es":"VW","type":"have"}
-{"id":"14","name":"Toyota","description":"sub2","parent":"2","status":"active","name_en":"T","name_es":"B","type":"general"}
+{"id":"12","name":"Adidas ","description":"Nothing is impossible ","parent":"1","status":"active","name_en":"Zara","name_es":"H&M","type":"general","price":10.0}
+{"id":"2","name":"Auto","description":"write something ","parent":"0","name_en":"Car","name_es":"wagon","pic":null,"type":"general","status":"active"}
+{"id":"13","name":"VW","description":"sub1","parent":"2","status":"active","name_en":"VW","name_es":"VW","type":"general","price":10.0}
+{"id":"14","name":"Toyota","description":"sub2","parent":"2","status":"active","name_en":"T","name_es":"B","type":"general","price":10.0}
+{"id":"85381369602","name":"Gesundheit","parent":"0","price":0.0}
