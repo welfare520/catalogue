@@ -34,28 +34,32 @@
 					  <tr>
 					    <td valign="top">Category Details 
 					       <p> 
-							  <form enctype="multipart/form-data" >
-							      <div class="category-name">Category ID: <%=category["id"]%></div> 
+							  <form enctype="multipart/form-data" id="form_<%=category['id']%>" >
+							      <div style="display: inline;">Category ID: <%=category["id"]%></div> 
+							      <span style="width:60px;display:inline-block"></span>
+							      <div style="display: inline;">Category Status: <%=category["status"]%></div>
 							      <br>
-								  <div class="category-name">Display Name: </div> 
-								  <input type="text" name="l" id="name_<%=category["id"]%>" 
+								  <div style="display: inline;">Display Name: </div> 
+								  <input type="text" name="category-name"
 								         value="<%=category['name']%>"size="35"/>
-								  <br>
-								  <div class="category-name">Description: </div>  
-								  <textarea id="desc_<%=category["id"]%>" style="width:400px;height:50px;"><%=category["description"]%></textarea>
+								    <br>
+								  <div style="display: inline;">Description: </div>  
+								  <textarea name="description" style="width:400px;height:50px;"><%=category["description"]%></textarea>
 								  <br> 
-								  <div class="category-name">Translation EN </div>  
-								  <input type="text" name="l" id="name_en_<%=category["id"]%>" 
+								  <div style="display: inline;">Translation EN </div>  
+								  <input type="text" name="en" 
 								         value="<%=category['name_en']%>" size="35">
 								  <br> 
-								    <div class="category-name">Translation ES </div>  
-								    <input type="text" name="l" id="name_es_<%=category["id"]%>" 
+								    <div style="display: inline;">Translation ES </div>  
+								    <input type="text" name="es"
 								           value="<%=category['name_es']%>" size="35">
-								    <div class="category-name">Category Price </div>  
-								    <input type="number" name="l" id="price_<%=category["id"]%>" 
+								     <br>
+								    <div style="display: inline;">Category Price </div>  
+								    <input type="number" name="price" 
 								           value=<%=category["price"]%> size="35" min="1" max="9999999">
-		                            <br> <div class="category-name"> Category Type: </div> 
-		                            <select id="type_<%=category["id"]%>">
+		                            <br> 
+		                            <div style="display: inline;"> Category Type: </div> 
+		                            <select name="type">
 										<option value ="general" <%='selected ="selected"' if category["type"] == "general" or category["type"].nil? %> >general</option>
 										<option value ="have" <%='selected ="selected"' if category["type"] == "have"%> >have only </option>
 										<option value ="need" <%='selected ="selected"' if category["type"] == "need"%>>need only</option>

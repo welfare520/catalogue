@@ -1,28 +1,21 @@
 function saveData(thisObj){
-  var selectObj = thisObj.value.toString(); 
-  var NameObj=document.getElementById("name_"+selectObj);
-  var NameENObj=document.getElementById("name_en_"+selectObj);
-  var NameESObj=document.getElementById("name_es_"+selectObj);
-  var DescObj=document.getElementById("desc_"+selectObj);
-  var TypeObj=document.getElementById("type_"+selectObj);
-  var IconObj=document.getElementById("icon_"+selectObj);
-  var PriceObj = document.getElementById("price_"+selectObj);
+    
+    var selectObj = thisObj.value.toString(); 
+    var form = document.getElementById("form_"+selectObj);    
+    var PriceObj = document.getElementById("price_"+selectObj);
 
-  var price = PriceObj.value || 10;
+    $.post('/category/'+selectObj+'/update', {
+      'name': form.elements.namedItem("category-name").value.toString(), 
+      'name_en': form.elements.namedItem("en").value.toString(), 
+      'name_es': form.elements.namedItem("es").value.toString(), 
+      'description': form.elements.namedItem("description").value.toString(), 
+      'type': form.elements.namedItem("type").value.toString(), 
+      'price': form.elements.namedItem("price").value || 10, 
+      }, function(response){ 
 
-  $.post('/category/'+selectObj+'/update', {
-    'name': NameObj.value.toString(),
-    'name_en': NameENObj.value.toString(),
-    'name_es': NameESObj.value.toString(),
-    'description': DescObj.value.toString(),
-    'type': TypeObj.value.toString(),
-    'price': price
-    }, function(response){ 
+      });
 
-     });
-
-  $( "#edit-dialog-"+selectObj).dialog( "close" );
-
+    $( "#edit-dialog-"+selectObj).dialog( "close" );
 }
 
 function deleteId(selectObj){ 
