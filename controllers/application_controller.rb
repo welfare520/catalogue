@@ -30,8 +30,9 @@ class ApplicationController < Sinatra::Application
     end
 
     get 'icon/:icon' do
-      File.exist?('./public/icon/#{params[:icon]}') ? File.read("./public/icon/#{params[:icon]}") : File.read("./public/icon/default.jpg")
-
+      puts "./public/upload/icon/#{params[:icon]}"
+      puts File.exist?("./public/upload/icon/#{params[:icon]}") 
+      File.exist?("./public/upload/icon/#{params[:icon]}") ? File.read("./public/upload/icon/#{params[:icon]}") : File.read("./public/upload/icon/default.jpg")
     end 
 
     post 'category/:id/update' do 
@@ -67,7 +68,7 @@ class ApplicationController < Sinatra::Application
     post 'upload/:id/icon' do 
       file_ext = File.extname(params[:data][:filename])  
       filename = params["id"] + file_ext
-      File.open('./public/icon/' + filename, "w") do |f|
+      File.open('./public/upload/icon/' + filename, "w") do |f|
         f.write(params[:data][:tempfile].read)
       end
       halt 200, "file uploaded"    

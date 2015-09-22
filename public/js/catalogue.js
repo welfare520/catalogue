@@ -81,9 +81,10 @@ function updateIcon(id) {
         data: fd,
         success: function (data) {            
             d = new Date();
+            $("#img_origin_"+id).attr("src", "/icon/" + id + ".jpg?"+new Date().getTime());
             $("#img_"+id).attr("src", "/icon/" + id + ".jpg?"+new Date().getTime());
             window.alert("Icon Uploaded");
-            return true; 
+            return false; 
         },
       error: function (xhr, ajaxOptions, thrownError) {
         alert(xhr.status);
