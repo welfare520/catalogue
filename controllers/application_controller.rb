@@ -44,8 +44,7 @@ class ApplicationController < Sinatra::Application
           else
             params[:parent] = p_entry["id"]
           end  
-
-          catalogue.check_parent(category.id, category.parent)      
+          catalogue.check_parent(params[:id], params[:parent])      
         end
         params[:price] = params[:price].to_f 
         params[:status] ||= "active"
