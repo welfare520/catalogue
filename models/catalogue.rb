@@ -41,8 +41,6 @@ class Catalogue
 
 	def check_parent(id, parent_id)
 		content[content_hash[id]]['children'].each do |cid|
-			puts content[content_hash[cid]]["id"]
-			puts parent_id
 			raise "Category tree looped!" if content[content_hash[cid]]["id"] == parent_id
 			check_parent(id, cid)
 		end
