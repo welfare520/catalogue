@@ -69,7 +69,7 @@
 					    </td>
 					    <td width="80" valign="top">
 					        <img src="/icon/<%=category['id']%>.jpg" alt="icon" style="width:240px;height:240px;"
-					             id = "img_origin_<%=category['id']%>">
+					             id = "img_<%=category['id']%>">
 					        <br>
 					        Change Icon				      	
 							<form enctype="multipart/form-data" >
@@ -127,8 +127,8 @@
 						<% if category["parent"] == "0" %>
 						<li>
 					    	<h3 class="cbp-nttrigger" style="display:inline;">
-					    	<span style="width:350px;display:inline-block">
-					    		<img id='img_<%=category["id"]%>' align="top" src="/icon/<%=category['id']%>.jpg" alt="icon" 
+					    	<span style="width:350px;height:65px;display:inline-block">
+					    		<img id='img_<%=category["id"]%>' align="top" src="/icon/<%=category['id']%>.jpg" alt="cloth" 
 								     style="width:48px;height:48px;"> <%=category["name"]%>	
 					    	</span>								
 							</h3>	
