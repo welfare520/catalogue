@@ -20,17 +20,24 @@ $( function() {
   });
 });
 
+$( function() { 
+  $('.delete-category-confirm').click(function(e){
+       // e.preventDefault(); //Prevent the normal submission action
 
-function deleteId(selectObj){ 
-  $.post('/category/'+selectObj+'/update', {
-        "status": "deleted"
-    }, function(response){ 
+       var button = this;
+       var id = button.name.toString();
 
-    });
+         $.post('/category/'+id+'/update', {
+                "status": "deleted"
+            }, function(response){ 
 
-  $( "#dialog_delete_"+selectObj).dialog( "close" );
-  location.reload(false);
-}
+            });
+
+          $( "#dialog-delete-"+id).dialog( "close" );
+          location.reload(false);
+  });
+});
+
 
 function moveId(selectObj){
   var PID=document.getElementById("move2id_"+selectObj).value.toString();

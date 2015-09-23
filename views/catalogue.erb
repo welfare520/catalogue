@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Catalogue Management</title>
+		<meta name="description" content="Blueprint: Nested Accordion" />
+		<meta name="keywords" content="nested, accordion, simple, vertical, web development, css3, javascript" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="/css/default.css" />
+		<link rel="stylesheet" type="text/css" href="/css/component.css" />
+	    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">   
+	    <link rel="stylesheet" href="/css/dialog.css">             
+
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
+
+        <script src="/js/jquery.cbpNTAccordion.min.js"></script>
+		<script src="/js/modernizr.custom.js"></script> 	
+		<script src="/js/catalogue.js"></script> 
+	</head>
+	<body>
+		<div class="container">
+			<header class="clearfix">
+				<h1>Catalogue Management</h1>
+				<p style="margin-left:25em;">Version 1.0   Last Modified: 2008-08-08</p> 
+			</header>	
+
+			<% catalogue.content.each do |category| %>
+				<div class="edit-dialog" id="edit-dialog-<%=category["id"]%>" title="Edit category" style="display:none">
+					<table width="100%">
+					  <tr>
+					    <td valign="top">Category Details 
+					       <p> 
+							    <form enctype="multipart/form-data" class="dialog-form" name="<%=category['id']%>">
+							      <div style="display: inline;">Category ID: <%=category["id"]%></div> 
+							      <span style="width:60px;display:inline-block"></span>
+							      <div style="display: inline;">Category Status: <%=category["status"]%></div>
+							      <br>
+								  <div style="display: inline;">Display Name: </div> 
+								  <input type="text" name="category-name"
+								         value="<%=category['name']%>"size="35"/>
+								    <br>
+								  <div style="display: inline;">Description: </div>  
+								  <textarea name="description" style="width:400px;height:50px;"><%=category["description"]%></textarea>
+								  <br> 
+								  <div style="display: inline;">Translation EN </div>  
+								  <input type="text" name="en" 
+								         value="<%=category['name_en']%>" size="35">
+								  <br> 
+								    <div style="display: inline;">Translation ES </div>  
+								    <input type="text" name="es"
+								           value="<%=category['name_es']%>" size="35">
+								     <br>
+								    <div style="display: inline;">Category Price </div>  
+								    <input type="number" name="price" 
+								           value=<%=category["price"]%> size="35" min="1" max="9999999">
+		                            <br> 
+		                            <div style="display: inline;"> Category Type: </div> 
+		                            <select name="type">
+										<option value ="general" <%='selected ="selected"' if category["type"] == "general" or category["type"].nil? %> >general</option>
+										<option value ="have" <%='selected ="selected"' if category["type"] == "have"%> >have only </option>
+										<option value ="need" <%='selected ="selected"' if category["type"] == "need"%>>need only</option>
+									</select>
+									<br>	
+								    <button type="submit" class="button-category-dialog">Save</button>
+								    </form>
+							    </p>
+
+					    </td>
+					    <td width="80" valign="top">
+					        <img src="/icon/<%=category['id']%>.jpg" alt="icon" style="width:240px;height:240px;"
+					             id = "img_origin_<%=category['id']%>">
+					        <br>
+					        Change Icon				      	
+							<form enctype="multipart/form-data" >
+								<input id="icon_<%=category['id']%>" type="file" name="icon_name" onchange="updateIcon(<%=category['id']%>); return false;"/>	
+							</form> 
+					    </td>
+					  </tr>
+					</table>
+				</div>
+
+
+				<div class="move-dialog" id="move-dialog-<%=category["id"]%>" 
+				     title="Move category" style="display:none">
+					<form>
+					    Category Name: <%=category["name"]%>
+					    <br>
+					    Enter parent category ID: 
+					    <form>	
+						    <input type="text" id="move2id_<%=category["id"]%>" size="15"/>
+						    <button type="button" onclick="moveId('<%=category["id"]%>')" >Move</button>
+					    </form> 
+					</form> 
+				</div>
+
+				<div class="delete-dialog" id="delete-dialog-<%=category["id"]%>" title="Delete category" 
+				     style="display:none">
+					<form>
+					    Category <%=category["name"]%> will be removed 
+					    <br>
+					    <form>	
+						    <button type="button" name="<%=category['id']%>" class="delete-category-confirm">Confirm</button>
+					    </form> 
+					</form> 
+				</div>
+
+				<div class="add-dialog" id="add-dialog-<%=category["id"]%>" title="Add new sub-category" style="display:none">
+					<form> 
+					    <br>
+					    Enter sub-category name: 
+					    <form>	
+					        <input type="text" id="addsub_<%=category["id"]%>" size="15"/>
+						    <button type="button" onclick="addCategory('<%=category["id"]%>')" >Confirm</button>
+					    </form> 
+					</form> 
+				</div>
+
+
+			<% end %>
+			
+			<div class="main">
+				<ul id="cbp-ntaccordion" class="cbp-ntaccordion">
+					
+					<% catalogue.content.each do |category| %> 					    
+						<% if category["parent"] == "0" %>
+						<li>
+					    	<h3 class="cbp-nttrigger" style="display:inline;">
+					    	<span style="width:350px;height:65px;display:inline-block">
+					    		<img id='img_<%=category["id"]%>' align="top" src="/icon/<%=category['id']%>.jpg" alt="cloth" 
+								     style="width:48px;height:48px;"> <%=category["name"]%>	
+					    	</span>								
+							</h3>	
+							<button class="edit-category" value="<%=category['id']%>">Edit</button> 
+							<button class="move-category" value="<%=category['id']%>">Move</button> 				
+							<button class="delete-category" value="<%=category["id"]%>">Delete</button> 
+							<button class="add-category" value="<%=category["id"]%>">Add Sub</button>
+							<div class="cbp-ntcontent">
+
+							    <p></p>
+
+								<ul class="cbp-ntsubaccordion">
+
+							    <% catalogue.content.each do |sub| %> 
+							        <% if sub["parent"] == category["id"] %>
+
+
+										<li>
+											<h4 class="cbp-nttrigger">
+												<img id='img_<%=sub["id"]%>' align="middle" src="/icon/<%=sub['id']%>.jpg" alt="cloth" style="width:48px;height:48px;"> <%=sub["name"]%>
+											</h4>
+											<div class="cbp-ntcontent">
+												<p> 
+													<button class="edit-category" value="<%=sub["id"]%>">Edit</button> 
+													<button class="move-category" value="<%=sub["id"]%>">Move</button> 
+													<button class="delete-category" value="<%=sub["id"]%>">Delete</button> 
+													<button class="add-category" value="<%=sub["id"]%>">Add Sub</button>
+												</p>
+
+		                    <ul class="cbp-ntsubaccordion">
+		        						    <% catalogue.content.each do |subsub| %>
+		        						        <% if subsub["parent"] == sub["id"] %>
+																<li>
+																	<h5 class="cbp-nttrigger">
+																	<%=subsub['name']%> </h5>
+																	<div class="cbp-ntcontent">
+																		<p> Currently the third level is not allowed to edit</p>
+																	</div>
+																</li>
+													    <% end %>
+												    <% end %>
+	                      </ul>
+                                        
+                        </div>
+										</li>
+
+
+							        <% end %>
+							    <% end %>
+						        </ul>
+                               
+										
+									
+
+
+								</div>
+	                        </li>	
+
+						<% end %>
+					<% end %>
+					</ul>
+
+
+
+
+
+
+									
+				
+			</div>
+		</div>
+
+        
+</html>
