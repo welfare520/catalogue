@@ -25,8 +25,8 @@ class ApplicationController < Sinatra::Application
 
   namespace '/' do
 
-    get 'beamer' do
-      erb :beamer, :locals => {:catalogue => catalogue}
+    get 'builder' do
+      erb :builder, :locals => {:catalogue => catalogue}
     end
 
     get do      

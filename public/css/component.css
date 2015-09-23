@@ -36,7 +36,6 @@
 
 .cbp-ntaccordion h4 {
 	font-size: 1.2em;
-	text-transform: uppercase;
 	letter-spacing: 0.4em;
 	padding: 0.2em 0 0.5em;
 	margin: 0 0 0.5em;
@@ -77,15 +76,15 @@
 }
 
 .cbp-ntaccordion > li > .cbp-nttrigger:before {
-	content: "\36";
+	content: "\32";
 }
 .cbp-ntaccordion > li > .cbp-nttrigger:hover:before {
-	content: "\35";
+	content: "\33";
 	color: inherit;
 }
 .cbp-ntaccordion > li.cbp-ntopen > .cbp-nttrigger:before,
 .no-js .cbp-ntaccordion > li > .cbp-nttrigger:before {
-	content: "\34";
+	content: "\31";
 	color: inherit;
 }
 

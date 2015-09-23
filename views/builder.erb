@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Campaign builder</title>
+      <meta name="description" content="Blueprint: Nested Accordion" />
+      <meta name="keywords" content="nested, accordion, simple, vertical, web development, css3, javascript" />
+      <meta name="author" content="Codrops" />
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" type="text/css" href="/css/default.css" />
+      <link rel="stylesheet" type="text/css" href="/css/component.css" />
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+      <link rel="stylesheet" href="/css/dialog.css">
+      <link href="/css/video-js.css" rel="stylesheet" type="text/css">
+      <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>  
+      <script src="/js/jquery.cbpNTAccordion.min.js"></script>
+      <script src="/js/modernizr.custom.js"></script>    
+      <script src="/js/catalogue.js"></script> 
+      <script type="text/javascript" src="/js/video.dev.js"></script>
+      <script type="text/javascript" src="/js/video.js"></script>
+      <script type="text/javascript" src="/js/video.novtt.dev.js"></script>
+      <script type="text/javascript" src="/js/video.novtt.js"></script>
+      <script>
+         videojs.options.flash.swf = "video-js.swf";
+      </script>
+      <style type="text/css">
+         div.ui-datepicker {
+         font-size: 62.5%;
+         }
+      </style>
+   </head>
+   <body>
+      <header class="clearfix" align="center">
+         <h1 >Campaign Builder</h1>
+      </header>
+      <p></p>
+      <p></p>
+      <p></p>
+      <table align="center">
+         <tr>
+            <td width='640' valign="top" >
+               <p><font size="5" color="black">Campaign list</font></p>
+               <ul>
+                  <li><button  style="border:none; background-color: transparent;" class="edit-campaign-icon" ><img align="buttom" src="/pic/write_edit_icon.png" style="width:32px;height:32px;"></button>
+                     <font size="5" color="black">1 & 1 </font>
+                  </li>
+                  <p></p>
+                  <li><button  style="border:none; background-color: transparent;" class="edit-campaign-icon" ><img align="buttom" src="/pic/write_edit_icon.png" style="width:32px;height:32px;"></button>
+                     <font size="5" color="black">Bayerische Motoren Werke AG</font>
+                  </li>
+                  <p></p>
+                  <li><button  style="border:none; background-color: transparent;" class="edit-campaign-icon" ><img align="buttom" src="/pic/write_edit_icon.png" style="width:32px;height:32px;"></button><font size="5" color="black">Zalando Online Shop</font></li>
+               </ul>
+            </td>
+            <td width="640" valign="top" align="left">
+               <p><font size="5">Campign details</font> </p>
+               <div>
+                  Campaign ID: 123456
+                  <p></p>
+                  Campaign name:    
+                  <input type="text" name="name"  
+                     value="" size="35">
+                  <p></p>
+                  Company name:    
+                  <input type="text" name="name"  
+                     value="" size="35">
+                  <p></p>
+                  Owner:    
+                  <input type="text" name="name"  
+                     value="" size="35">
+                  <p></p>
+                  <table>
+                     <tr>
+                        <td>
+                           Start date: 
+                           <div id="start" style="display: inline"></div>
+                        </td>
+                        <td>
+                           End date: 
+                           <div style="display: inline" id="end"></div>
+                        </td>
+                     </tr>
+                  </table>
+                  <p></p>
+                  <p></p>
+                  <p></p>
+                  <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="480" height="264"
+                     poster="http://video-js.zencoder.com/oceans-clip.png"
+                     data-setup="{}">
+                     <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+                     <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+                     <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+                     <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track>
+                     <!-- Tracks need an ending tag thanks to IE9 -->
+                     <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track>
+                     <!-- Tracks need an ending tag thanks to IE9 -->
+                     <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                  </video>
+               </div>
+            </td>
+         </tr>
+      </table>
+      <body>
+</html>

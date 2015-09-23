@@ -1,124 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-		<title>Catalogue Management</title>
-		<meta name="description" content="Blueprint: Nested Accordion" />
-		<meta name="keywords" content="nested, accordion, simple, vertical, web development, css3, javascript" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="/css/default.css" />
-		<link rel="stylesheet" type="text/css" href="/css/component.css" />
-	    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">   
-	    <link rel="stylesheet" href="/css/dialog.css">             
-
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
-
-        <script src="/js/jquery.cbpNTAccordion.min.js"></script>
-		<script src="/js/modernizr.custom.js"></script> 	
-		<script src="/js/catalogue.js"></script> 
-	</head>
-	<body>
-		<div class="container">
-			<header class="clearfix">
-				<h1>Catalogue Management</h1>
-				<p style="margin-left:25em;">Version 1.0   Last Modified: 2008-08-08</p> 
-			</header>	
-
-			<% catalogue.content.each do |category| %>
-				<div class="edit-dialog" id="edit-dialog-<%=category["id"]%>" title="Edit category" style="display:none">
-					<table width="100%">
-					  <tr>
-					    <td valign="top">Category Details 
-
-					    </td>
-					    <td width="80" valign="top">
-					    </td>
-					  </tr>
-					</table>
-				</div>
-			<% end %>
-			
-			<div class="main">
-				<ul id="cbp-ntaccordion" class="cbp-ntaccordion">
-					
-					<% catalogue.content.each do |category| %> 					    
-						<% if category["parent"] == "0" %>
-						<li>
-					    	<h3 class="cbp-nttrigger" style="display:inline;">
-					    	<span style="width:350px;height:65px;display:inline-block">
-					    		<img id='img_<%=category["id"]%>' align="top" src="/icon/<%=category['id']%>.jpg" alt="cloth" 
-								     style="width:48px;height:48px;"> <%=category["name"]%>	
-					    	</span>								
-							</h3>	
-
-							<div class="cbp-ntcontent">
-
-							    <p></p>
-
-								<ul class="cbp-ntsubaccordion">
-
-							    <% catalogue.content.each do |sub| %> 
-							        <% if sub["parent"] == category["id"] %>
-
-
-										<li>
-											<h4 class="cbp-nttrigger">
-												<img id='img_<%=sub["id"]%>' align="middle" src="/icon/<%=sub['id']%>.jpg" alt="cloth" style="width:48px;height:48px;"> <%=sub["name"]%>
-											</h4>
-											<div class="cbp-ntcontent">
-												<p> 
-												
-												</p>
-											
-
-
-	                                        <ul class="cbp-ntsubaccordion">
-
-		        						    <% catalogue.content.each do |subsub| %>
-		        						        <% if subsub["parent"] == sub["id"] %>
-														<li>
-															<h5 class="cbp-nttrigger">
-															<%=subsub['name']%> </h5>
-															<div class="cbp-ntcontent">
-																<p> Currently the third level is not allowed to edit</p>
-															</div>
-														</li>
-											    <% end %>
-										    <% end %>
-	                                        </ul>
-                                        
-                                        </div>
-										</li>
-
-
-							        <% end %>
-							    <% end %>
-						        </ul>
-                               
-										
-									
-
-
-								</div>
-	                        </li>	
-
-						<% end %>
-					<% end %>
-					</ul>
-
-
-
-
-
-
-									
-				
-			</div>
-		</div>
-
-        
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Catalogue Management</title>
+      <meta name="description" content="Blueprint: Nested Accordion" />
+      <meta name="keywords" content="nested, accordion, simple, vertical, web development, css3, javascript" />
+      <meta name="author" content="Codrops" />
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" type="text/css" href="/css/default.css" />
+      <link rel="stylesheet" type="text/css" href="/css/component.css" />
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+      <link rel="stylesheet" href="/css/dialog.css">
+      <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
+      <script src="/js/jquery.cbpNTAccordion.min.js"></script>
+      <script src="/js/modernizr.custom.js"></script> 	
+      <script src="/js/catalogue.js"></script> 
+   </head>
+   <body>
+      <div class="container">
+         <header class="clearfix">
+            <h1>Catalogue Management</h1>
+            <p style="margin-left:25em;">Version 1.0   Last Modified: 2008-08-08</p>
+         </header>
+         <% catalogue.content.each do |category| %>
+         <div class="edit-dialog" id="edit-dialog-<%=category["id"]%>" title="Edit category" style="display:none">
+            <table width="100%">
+               <tr>
+                  <td valign="top">Category Details 
+                  </td>
+                  <td width="80" valign="top">
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <% end %>
+         <div class="main">
+            <ul id="cbp-ntaccordion" class="cbp-ntaccordion">
+               <% catalogue.content.each do |category| %> 					    
+               <% if category["parent"] == "0" %>
+               <li>
+                  <h3 class="cbp-nttrigger" style="display:inline;">
+                     <span style="width:350px;height:65px;display:inline-block">
+                     <img id='img_<%=category["id"]%>' align="top" src="/icon/<%=category['id']%>.jpg" alt="cloth" 
+                        style="width:48px;height:48px;"> <%=category["name"]%>	
+                     </span>								
+                  </h3>
+                  <div class="cbp-ntcontent">
+                     <p></p>
+                     <ul class="cbp-ntsubaccordion">
+                        <% catalogue.content.each do |sub| %> 
+                        <% if sub["parent"] == category["id"] %>
+                        <li>
+                           <h4 class="cbp-nttrigger">
+                              <img id='img_<%=sub["id"]%>' align="middle" src="/icon/<%=sub['id']%>.jpg" alt="cloth" style="width:48px;height:48px;"> <%=sub["name"]%>
+                           </h4>
+                           <div class="cbp-ntcontent">
+                              <p> 
+                              </p>
+                              <ul class="cbp-ntsubaccordion">
+                                 <% catalogue.content.each do |subsub| %>
+                                 <% if subsub["parent"] == sub["id"] %>
+                                 <li>
+                                    <h5 class="cbp-nttrigger">
+                                       <%=subsub['name']%> 
+                                    </h5>
+                                    <div class="cbp-ntcontent">
+                                       <p> Currently the third level is not allowed to edit</p>
+                                    </div>
+                                 </li>
+                                 <% end %>
+                                 <% end %>
+                              </ul>
+                           </div>
+                        </li>
+                        <% end %>
+                        <% end %>
+                     </ul>
+                  </div>
+               </li>
+               <% end %>
+               <% end %>
+            </ul>
+         </div>
+      </div>
 </html>

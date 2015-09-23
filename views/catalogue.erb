@@ -24,6 +24,7 @@
          <header class="clearfix">
             <h1>Catalogue Management</h1>
             <p style="margin-left:25em;">Version 1.0   Last Modified: 2008-08-08</p>
+            <a href="builder"><font size="4" color="red">Go to Campaign Builder</font></a>          
          </header>
          <% catalogue.content.each do |category| %>
          <div class="edit-dialog" id="edit-dialog-<%=category["id"]%>" title="Edit category" style="display:none">
@@ -169,4 +170,5 @@
             </ul>
          </div>
       </div>
+   </body>
 </html>
