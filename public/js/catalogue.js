@@ -1,22 +1,25 @@
-function saveData(thisObj){
-    
-    var selectObj = thisObj.value.toString(); 
-    var form = document.getElementById("form_"+selectObj);    
-    var PriceObj = document.getElementById("price_"+selectObj);
+$( function() { 
+  $('.dialog-form').submit(function(e){
+       e.preventDefault(); //Prevent the normal submission action
 
-    $.post('/category/'+selectObj+'/update', {
-      'name': form.elements.namedItem("category-name").value.toString(), 
-      'name_en': form.elements.namedItem("en").value.toString(), 
-      'name_es': form.elements.namedItem("es").value.toString(), 
-      'description': form.elements.namedItem("description").value.toString(), 
-      'type': form.elements.namedItem("type").value.toString(), 
-      'price': form.elements.namedItem("price").value || 10, 
-      }, function(response){ 
+       var form = this;
+       var id = form.name.toString();
 
-      });
+        $.post('/category/'+id+'/update', {
+          'name': form.elements.namedItem("category-name").value.toString(), 
+          'name_en': form.elements.namedItem("en").value.toString(), 
+          'name_es': form.elements.namedItem("es").value.toString(), 
+          'description': form.elements.namedItem("description").value.toString(), 
+          'type': form.elements.namedItem("type").value.toString(), 
+          'price': form.elements.namedItem("price").value || 10, 
+          }, function(response){ 
 
-    $( "#edit-dialog-"+selectObj).dialog( "close" );
-}
+        });
+
+        $( "#edit-dialog-"+id).dialog( "close" );
+  });
+});
+
 
 function deleteId(selectObj){ 
   $.post('/category/'+selectObj+'/update', {

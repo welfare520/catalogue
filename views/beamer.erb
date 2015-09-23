@@ -34,7 +34,7 @@
 					  <tr>
 					    <td valign="top">Category Details 
 					       <p> 
-							  <form enctype="multipart/form-data" id="form_<%=category['id']%>" >
+							    <form enctype="multipart/form-data" class="dialog-form" name="<%=category['id']%>">
 							      <div style="display: inline;">Category ID: <%=category["id"]%></div> 
 							      <span style="width:60px;display:inline-block"></span>
 							      <div style="display: inline;">Category Status: <%=category["status"]%></div>
@@ -65,8 +65,7 @@
 										<option value ="need" <%='selected ="selected"' if category["type"] == "need"%>>need only</option>
 									</select>
 									<br>	
-								    <button type="button" value="<%=category['id']%>" 
-								            onclick="saveData(this)" >Save</button>
+								    <button type="submit" class="button-category-dialog">Save</button>
 								    </form>
 							    </p>
 
