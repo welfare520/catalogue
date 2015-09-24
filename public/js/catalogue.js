@@ -1,16 +1,4 @@
-$(function() {
-    $( ".edit-campaign-icon" ).click(function() {
-      e.preventDefault();
-        var Id = this.name.toString();
-        var x=this;
-        var y=this;
-    });
-});
 
-$(function() {
-  $( "#start" ).datepicker({inline: true});
-  $( "#end" ).datepicker({inline: true});
-});
 
 
 $( function() { 

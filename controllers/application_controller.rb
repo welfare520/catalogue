@@ -14,20 +14,20 @@ class ApplicationController < Sinatra::Application
       settings.auth_config
     end
 
+    def campaigns 
+      @campaigns ||= Campaigns.load_from_file("./data/campaigns.json")
+    end
+
     def catalogue
       @catalogue ||= Catalogue.load_from_file("./data/catalogue.json")
     end
   end
 
-  use Rack::Auth::Basic, "Restricted Area" do |username, password|
-    username == auth_config.user and password == auth_config.pass
-  end
+  # use Rack::Auth::Basic, "Restricted Area" do |username, password|
+  #   username == auth_config.user and password == auth_config.pass
+  # end
 
   namespace '/' do
-
-    get 'builder' do
-      erb :builder, :locals => {:catalogue => catalogue}
-    end
 
     get do      
       erb :catalogue, :locals => {:catalogue => catalogue}
@@ -86,3 +86,5 @@ class ApplicationController < Sinatra::Application
  
   end
 end
+
+require_relative 'builder'
