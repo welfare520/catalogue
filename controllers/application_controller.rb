@@ -6,6 +6,7 @@ class ApplicationController < Sinatra::Application
   set :auth_config, AuthConfig.new
   set :environment, :production
   enable :static
+  enable :sessions
 
   helpers ApplicationHelpers
 
@@ -29,7 +30,7 @@ class ApplicationController < Sinatra::Application
 
   namespace '/' do
 
-    get do      
+    get do     
       erb :catalogue, :locals => {:catalogue => catalogue}
     end
 
