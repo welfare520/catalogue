@@ -74,7 +74,7 @@
                      <br>
                      Change Icon                   
                      <form enctype="multipart/form-data" >
-                        <input id="icon_<%=category['id']%>" type="file" name="icon_name" onchange="updateIcon(<%=category['id']%>); return false;"/> 
+                        <input class="icon-change" type="file" name="<%=category['id']%>"/> 
                      </form>
                   </td>
                </tr>
@@ -88,7 +88,7 @@
                Enter parent category ID: 
             <form>   
                <input type="text" id="move2id_<%=category["id"]%>" size="15"/>
-               <button type="button" onclick="moveId('<%=category["id"]%>')" >Move</button>
+               <button type="button" name="<%=category['id']%>" class="move-category-confirm">Move</button>
             </form>
             </form> 
          </div>
@@ -108,7 +108,7 @@
                Enter sub-category name: 
             <form>   
                <input type="text" id="addsub_<%=category["id"]%>" size="15"/>
-               <button type="button" onclick="addCategory('<%=category["id"]%>')" >Confirm</button>
+               <button type="button" name="<%=category['id']%>" class="add-category-confirm">Confirm</button>
             </form>
             </form> 
          </div>

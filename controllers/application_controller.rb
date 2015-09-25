@@ -48,7 +48,7 @@ class ApplicationController < Sinatra::Application
           else
             params[:parent] = p_entry["id"]
           end  
-          catalogue.check_parent(params[:id], params[:parent])      
+          catalogue.check_parent(params[:id], params[:parent])    
         end
         params[:price] = params[:price].to_f 
         params[:status] ||= "active"
@@ -57,14 +57,13 @@ class ApplicationController < Sinatra::Application
 
         catalogue.update_category(category)
         catalogue.save_to_file("./data/catalogue.json") 
-        "saved"
-      rescue 
-        halt 400, "bad request"
+        halt 201, "saved"
+      rescue Exception => e
+        halt 400, e.message 
       end
-
     end
 
-    post 'category/:id/addchild' do
+    post 'category/:id/addchild' do      
       category = Category.new({
         :parent => params[:id],
         :name => params[:name],
@@ -72,7 +71,7 @@ class ApplicationController < Sinatra::Application
         })
       catalogue.add_category(category)
       catalogue.save_to_file("./data/catalogue.json") 
-      "saved"
+      halt 201, "created"
     end
 
     post 'upload/:id/icon' do 
@@ -81,7 +80,7 @@ class ApplicationController < Sinatra::Application
       File.open('./public/upload/icon/' + filename, "w") do |f|
         f.write(params[:data][:tempfile].read)
       end
-      halt 200, "file uploaded"    
+      halt 201, "file uploaded"    
     end
  
   end
