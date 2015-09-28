@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Inbox</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+
+    $('.campaign-icon').css('cursor', 'pointer');
+
+    $( ".campaign-icon" ).click( function(e){
+      e.preventDefault();
+
+
+    });
+  });
+</script>
+<style type="text/css">
+  #inbox-div {
+    margin:auto;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+}
+
+div.item {
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+}
+img {
+  padding:10px;
+    width: 130px;
+    height: 100px;
+}
+.caption {
+    display: block;
+}
+
+</style>
+</head>
+<body>
+ 
+<div id="inbox-div">
+<table width="100%">
+
+<tr>
+  <td width="33.3%">
+      <div class="item">
+  <img src="/pic/cloth.jpg" class="campaign-icon">
+  <span class="caption">Text</span>
+  </div>
+  </td>
+  <td width="33.3%">
+
+    <div class="item">
+  <img src="/pic/cloth.jpg" class="campaign-icon">
+  <span class="caption">Text</span>
+  </div>
+    
+  </td>
+    <td width="33.3%">
+
+    <div class="item">
+  <img src="/pic/enadco.png" class="campaign-icon">
+  <span class="caption">Text</span>
+  </div>
+    
+  </td>
+</tr>
+</table>
+
+
+</div>
+ 
+ 
+</body>
+</html>
