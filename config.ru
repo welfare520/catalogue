@@ -6,6 +6,7 @@ require "sinatra/namespace"
 require 'yaml'
 require 'virtus'
 require 'fileutils'
+require 'mongo'
 
 ENV['RACK_ENV'] ||= 'development'
 
