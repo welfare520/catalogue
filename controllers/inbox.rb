@@ -1,9 +1,35 @@
 class ApplicationController < Sinatra::Application
 
-	namespace '/inbox' do
-	    get do
-	    	mongodb[:catalogue].insert_one({ id: '1' })
-            erb :inbox
+	namespace '/users' do
+
+        get '/login' do
+            erb :login 
         end
+
+        post '/login_process' do
+            begin 
+                session_id = env["rack.session"]["session_id"] 
+                raise "user name cannot be empty" if params[:username].empty? 
+                uid = params[:username].gsub(/\s+/,"")
+                Sessions.new.create_session(session_id, uid)
+                redirect "/users/inbox/#{uid}"
+            rescue 
+                redirect '/users/login'
+            end
+        end
+
+        namespace '/inbox/:uid' do
+            get do
+                authenticate!
+                erb :inbox
+            end
+        end
+    end
+
+    def authenticate! 
+        session_id = env["rack.session"]["session_id"]    
+        unless Sessions.new.session_valid?(session_id, params[:uid])  
+            redirect '/users/login'
+        end   
     end
 end

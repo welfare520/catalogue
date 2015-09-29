@@ -12,4 +12,6 @@ ENV['RACK_ENV'] ||= 'development'
 
 Dir.glob('./{config,lib,models,helpers,controllers}/*.rb').each { |file| require file }
 
+BaseModel.setup_mongodb(Mongo::Client.new([ '127.0.0.1:12345' ], :database => 'zhanghe'))
+
 run ApplicationController

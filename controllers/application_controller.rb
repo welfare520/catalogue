@@ -22,10 +22,6 @@ class ApplicationController < Sinatra::Application
     def catalogue
       @catalogue ||= Catalogue.load_from_file("./data/catalogue.json")
     end
-
-    def mongodb
-      @@db ||= Mongo::Client.new([ '127.0.0.1:12345' ], :database => 'zhanghe')
-    end
   end
 
   # use Rack::Auth::Basic, "Restricted Area" do |username, password|
@@ -34,8 +30,8 @@ class ApplicationController < Sinatra::Application
 
   namespace '/' do
 
-    get do     
-      erb :catalogue, :locals => {:catalogue => catalogue}
+    get do      
+        erb :catalogue, :locals => {:catalogue => catalogue}
     end
 
     get 'icon/:icon' do

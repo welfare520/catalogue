@@ -1,6 +1,6 @@
 require 'virtus'
 
-class Catalogue
+class Catalogue < BaseModel
 	include Virtus.model
 
 	attribute :content, Array
