@@ -21,7 +21,8 @@ class ApplicationController < Sinatra::Application
         namespace '/inbox/:uid' do
             get do
                 authenticate!
-                erb :inbox
+                active_campaigns = campaigns.content.first(9)
+                erb :inbox, :locals => {:campaigns => active_campaigns, :user => params[:uid]}
             end
         end
         

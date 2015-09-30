@@ -1,87 +1,117 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Inbox</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <script type="text/javascript">
-  $(document).ready(function() {
+   <head>
+      <meta charset="utf-8">
+      <title>Inbox</title>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+      <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+      <script type="text/javascript">
+         $(document).ready(function() {         
+           $('.campaign-icon').css('cursor', 'pointer');
+         
+           $( ".campaign-icon" ).click( function(e){
+             e.preventDefault();  
+           });
+         });
+      </script>
+      <style type="text/css">
+         .inbox-private-div {
+         width:30em;
+         height:30em;
+         border: 0px solid #ccc;
+         float: right;
+         text-align:center;
+         }
+         .inbox-public-div {
+         width:30em;
+         height:30em;
+         border: 0px solid #ccc;
+         float: left;
+         text-align:center;
+         }
+         #inbox_div {
+         width: 855px;
+         margin:0 auto;
+         float: center;
+         }
+         div.item {
+         vertical-align: top;
+         display: inline-block;
+         text-align: center;
+         width: 120px;
+         }
+         img {
+         padding:10px;
+         width: 130px;
+         height: 100px;
+         }
+         .caption {
+         display: block;
+         }
+      </style>
+   </head>
+   <body>
+      <SPAN STYLE="color: red; font-size: 15pt">Demo Page</SPAN>
+      <p></p>
+      <SPAN STYLE="color: green; font-size: 15pt">Hello, <%= user%></SPAN>
+      <div id='inbox-div' style="width: 70em; margin: 0px auto;">
+         <div class="inbox-public-div">
+            Public campaigns 
+            <table width="100%">
+               <% campaigns.each_slice(3) do |campaign| %>
+               <tr>
+                  <td width="33.3%">
+                     <div class="item">
+                        <img src="/pic/cloth.jpg" class="campaign-icon" style="border:3px solid green">
+                        <span class="caption"><%=rand(10..20).to_s + '   points' %></span>
+                     </div>
+                  </td>
+                  <td width="33.3%">
+                     <div class="item">
+                        <img src="/pic/cloth.jpg" class="campaign-icon" style="border:3px solid green">
+                        <span class="caption"><%=rand(15..30).to_s + '   points' %></span>
+                     </div>
+                  </td>
+                  <td width="33.3%">
+                     <div class="item">
+                        <img src="/pic/enadco.png" class="campaign-icon" style="border:3px solid green">
+                        <span class="caption"><%=rand(5..15).to_s + '   points' %></span>
+                     </div>
+                  </td>
+               </tr>
+               <% end %>
+            </table>
+         </div>
+         <div class="inbox-private-div">
+            Private campaigns 
+            <table width="100%">
+               <% campaigns.each_slice(3) do |campaign| %>
+               <tr>
+                  <td width="33.3%">
+                     <div class="item">
+                        <img src="/pic/cloth.jpg" class="campaign-icon" style="border:3px solid green">
+                        <span class="caption"><%=rand(10..20).to_s + '   points' %></span>
+                     </div>
+                  </td>
+                  <td width="33.3%">
+                     <div class="item">
+                        <img src="/pic/cloth.jpg" class="campaign-icon" style="border:3px solid green">
+                        <span class="caption"><%=rand(15..30).to_s + '   points' %></span>
+                     </div>
+                  </td>
+                  <td width="33.3%">
+                     <div class="item">
+                        <img src="/pic/enadco.png" class="campaign-icon" style="border:3px solid green">
+                        <span class="caption"><%=rand(5..15).to_s + '   points' %></span>
+                     </div>
+                  </td>
+               </tr>
+               <% end %>
+            </table>
+         </div>
+      </div>
 
-    $('.campaign-icon').css('cursor', 'pointer');
 
-    $( ".campaign-icon" ).click( function(e){
-      e.preventDefault();
-
-
-    });
-  });
-</script>
-<style type="text/css">
-  #inbox-div {
-    margin:auto;
-    position:absolute;
-    top: 50%;
-    left: 50%;
-    width:30em;
-    height:18em;
-    margin-top: -9em; /*set to a negative number 1/2 of your height*/
-    margin-left: -15em; /*set to a negative number 1/2 of your width*/
-    border: 1px solid #ccc;
-}
-
-div.item {
-    vertical-align: top;
-    display: inline-block;
-    text-align: center;
-    width: 120px;
-}
-img {
-  padding:10px;
-    width: 130px;
-    height: 100px;
-}
-.caption {
-    display: block;
-}
-
-</style>
-</head>
-<body>
- 
-<div id="inbox-div">
-<table width="100%">
-
-<tr>
-  <td width="33.3%">
-      <div class="item">
-  <img src="/pic/cloth.jpg" class="campaign-icon" style="border:3px solid green">
-  <span class="caption">Text</span>
-  </div>
-  </td>
-  <td width="33.3%">
-
-    <div class="item">
-  <img src="/pic/cloth.jpg" class="campaign-icon" style="border:3px solid green">
-  <span class="caption">Text</span>
-  </div>
-    
-  </td>
-    <td width="33.3%">
-
-    <div class="item">
-  <img src="/pic/enadco.png" class="campaign-icon" style="border:3px solid green">
-  <span class="caption">Text</span>
-  </div>
-    
-  </td>
-</tr>
-</table>
-
-
-</div>
- 
- 
-</body>
+   </body>
 </html>

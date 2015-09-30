@@ -27,4 +27,8 @@ class BaseModel
 	        .find(:id => hash["id"])
 	        .update_one(hash, { :upsert => true })
 	end
+
+	def load_active
+		@@client[self.class.name.to_sym].find(:status => 'active')
+	end
 end
