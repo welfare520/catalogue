@@ -7,6 +7,7 @@ class ApplicationController < Sinatra::Application
   set :environment, :production
   enable :static
   enable :sessions
+  set :sessions, :expire_after => 2592000
 
   helpers ApplicationHelpers
 

@@ -1,8 +1,8 @@
 require 'virtus'
 
-class Campaigns
+class Campaigns < BaseModel
 	include Virtus.model
-
+ 
 	attribute :content, Array
 
 	def self.load_from_file(file)
