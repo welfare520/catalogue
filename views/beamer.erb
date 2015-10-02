@@ -4,7 +4,7 @@
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Catalogue Management</title>
+      <title>Beamer</title>
       <meta name="description" content="Blueprint: Nested Accordion" />
       <meta name="keywords" content="nested, accordion, simple, vertical, web development, css3, javascript" />
       <meta name="author" content="Codrops" />
@@ -18,12 +18,94 @@
       <script src="/js/jquery.cbpNTAccordion.min.js"></script>
       <script src="/js/modernizr.custom.js"></script> 	
       <script src="/js/catalogue.js"></script> 
+      <script type="text/javascript">
+      $(function() {
+        $( "input[type=checkbox]" ).change(function() {
+         var option = this.name.toString();
+         var uid = this.id.toString();
+         var category_id = this.value.toString();
+
+          if (this.checked == true) {
+             var selected = true
+          } else {
+             var selected = false
+          }
+
+         $.post('/users/beamer/' + uid + '/' + category_id, {
+            'selected': selected,
+            'option': option
+        }, function(response) {
+
+        });
+
+        });
+      });
+      </script>
+      <style type="text/css">
+      .checkbox-s, .checkbox-r {
+  position: relative;
+  top: -0.375rem;
+  margin: 0 1rem 0 0;
+  cursor: pointer;
+}
+
+.checkbox-s:before {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  content: "";
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  width: 2rem;
+  height: 2rem;
+  border: 4px solid #66CCFF;
+}
+
+.checkbox-r:before {
+  -webkit-transition: all 0.3s ease-in-out;
+  -webkit-border-radius: 50px;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  content: "";
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  width: 2rem;
+  height: 2rem;
+  border: 4px solid #66CCFF;
+}
+
+.checkbox-s:checked:before, .checkbox-r:checked:before{
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+ height: .5rem;
+  border-color: #009688;
+  border-top-style: none;
+  border-right-style: none;
+}
+
+.checkbox-s:after, .checkbox-r:after{
+  content: "";
+  position: absolute;
+  top: -0.125rem;
+  left: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: #fff;
+  cursor: pointer;
+}
+      </style>
    </head>
    <body>
       <div class="container">
+         <h1>Hello <%= user.id%>, welcome to beamer</h1>
          <header class="clearfix">
-            <h1>Catalogue Management</h1>
-            <p style="margin-left:25em;">Version 1.0   Last Modified: 2008-08-08</p>
+            Below you can easily build your profile
+            <p style="margin-left:25em;"></p>
          </header>
          <% catalogue.content.each do |category| %>
          <div class="edit-dialog" id="edit-dialog-<%=category["id"]%>" title="Edit category" style="display:none">
@@ -46,37 +128,46 @@
                      <span style="width:350px;height:65px;display:inline-block">
                      <img id='img_<%=category["id"]%>' align="top" src="/icon/<%=category['id']%>.jpg" alt="cloth" 
                         style="width:48px;height:48px;"> <%=category["name"]%>	
-                     </span>								
+                     </span>	
                   </h3>
+                  <% category_have = 'checked' if !user.profile[category["id"]].nil? && user.profile[category["id"]].include?("have") %>
+                  <% category_need = 'checked' if !user.profile[category["id"]].nil? && user.profile[category["id"]].include?("need") %>
+                  <input type="checkbox" id=<%= user.id%> name="have" value=<%=category["id"] %> class="checkbox-r" <%=category_have%>> &nbsp;&nbsp;
+                  <input type="checkbox" id=<%= user.id%> name="need" value=<%=category["id"] %> class="checkbox-s" <%=category_need%>>
+
                   <div class="cbp-ntcontent">
                      <p></p>
                      <ul class="cbp-ntsubaccordion">
-                        <% catalogue.content.each do |sub| %> 
-                        <% if sub["parent"] == category["id"] %>
+                        <% category['children'].each do |sub_id| %> 
+                        <% sub = catalogue.content[catalogue.content_hash[sub_id]] %>
                         <li>
-                           <h4 class="cbp-nttrigger">
+                           <h4 class="cbp-nttrigger" style="display:inline;">
+                           <span style="width:350px;height:65px;display:inline-block">
                               <img id='img_<%=sub["id"]%>' align="middle" src="/icon/<%=sub['id']%>.jpg" alt="cloth" style="width:48px;height:48px;"> <%=sub["name"]%>
+                              </span>  
                            </h4>
+                           <% sub_have = 'checked' if !user.profile[sub["id"]].nil? && user.profile[sub["id"]].include?("have") %>
+                           <% sub_need = 'checked' if !user.profile[sub["id"]].nil? && user.profile[sub["id"]].include?("need") %>
+                           <input type="checkbox" id=<%= user.id%> name="have" value=<%=sub["id"] %> class="checkbox-r" <%=sub_have%>> &nbsp;&nbsp;
+                           <input type="checkbox" id=<%= user.id%> name="need" value=<%=sub["id"] %> class="checkbox-s" <%=sub_need%>>
                            <div class="cbp-ntcontent">
                               <p> 
                               </p>
                               <ul class="cbp-ntsubaccordion">
-                                 <% catalogue.content.each do |subsub| %>
-                                 <% if subsub["parent"] == sub["id"] %>
+                                 <% sub['children'].each do |subsub_id| %>
+                                 <% subsub = catalogue.content[catalogue.content_hash[subsub_id]] %>
                                  <li>
                                     <h5 class="cbp-nttrigger">
                                        <%=subsub['name']%> 
                                     </h5>
                                     <div class="cbp-ntcontent">
-                                       <p> Currently the third level is not allowed to edit</p>
+                                       <p> Currently the third level categories are not available</p>
                                     </div>
                                  </li>
-                                 <% end %>
                                  <% end %>
                               </ul>
                            </div>
                         </li>
-                        <% end %>
                         <% end %>
                      </ul>
                   </div>
