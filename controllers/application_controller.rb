@@ -31,6 +31,11 @@ class ApplicationController < Sinatra::Application
 
   namespace '/' do
 
+    error Sinatra::NotFound do
+      content_type 'text/plain'
+      [404, 'Page Not Found']
+    end
+
     get do      
         erb :catalogue, :locals => {:catalogue => catalogue}
     end
