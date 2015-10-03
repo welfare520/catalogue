@@ -29,7 +29,7 @@ class ApplicationController < Sinatra::Application
                 authenticate! 
                 user = User.new(:id => params[:uid])
                 user.modify_profile(params[:category], params[:option], params[:selected])
-                halt 201, "profile modified" 
+                halt 201, "saved" 
             end
         end
 

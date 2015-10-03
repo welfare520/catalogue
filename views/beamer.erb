@@ -5,136 +5,128 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Beamer</title>
-      <meta name="description" content="Blueprint: Nested Accordion" />
-      <meta name="keywords" content="nested, accordion, simple, vertical, web development, css3, javascript" />
-      <meta name="author" content="Codrops" />
-      <link rel="shortcut icon" href="../favicon.ico">
+      <meta name="description" content="Beamer" />
+      <meta name="keywords" content="beamer, catalogue" />
+      <meta name="author" content="He Zhang" />
       <link rel="stylesheet" type="text/css" href="/css/default.css" />
       <link rel="stylesheet" type="text/css" href="/css/component.css" />
       <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
       <link rel="stylesheet" href="/css/dialog.css">
       <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
+      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>  
       <script src="/js/jquery.cbpNTAccordion.min.js"></script>
-      <script src="/js/modernizr.custom.js"></script> 	
+      <script src="/js/modernizr.custom.js"></script>   
       <script src="/js/catalogue.js"></script> 
       <script type="text/javascript">
-      $(function() {
-        $( "input[type=checkbox]" ).change(function() {
-         var option = this.name.toString();
-         var uid = this.id.toString();
-         var category_id = this.value.toString();
+         $(function() {
+           $( "input[type=checkbox]" ).change(function() {
+            var option = this.name.toString();
+            var uid = this.id.toString();
+            var category_id = this.value.toString();
+         
+             if (this.checked == true) {
+                var selected = true
+             } else {
+                var selected = false
+             }
+         
+            $.post('/users/beamer/' + uid + '/' + category_id, {
+               'selected': selected,
+               'option': option
+           }, function(response) {
+             if (response != "saved") {
+               alert( "falied: pleased reload the page" );
+             }
+           })
+            .fail(function() {
+               alert( "error: server unavailable" );
+               });         
+           });
+         });
 
-          if (this.checked == true) {
-             var selected = true
-          } else {
-             var selected = false
-          }
-
-         $.post('/users/beamer/' + uid + '/' + category_id, {
-            'selected': selected,
-            'option': option
-        }, function(response) {
-
-        });
-
-        });
-      });
       </script>
       <style type="text/css">
-      .checkbox-s, .checkbox-r {
-  position: relative;
-  top: -0.375rem;
-  margin: 0 1rem 0 0;
-  cursor: pointer;
-}
-
-.checkbox-s:before {
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  content: "";
-  position: absolute;
-  left: 0;
-  z-index: 1;
-  width: 2rem;
-  height: 2rem;
-  border: 4px solid #66CCFF;
-}
-
-.checkbox-r:before {
-  -webkit-transition: all 0.3s ease-in-out;
-  -webkit-border-radius: 50px;
-  -moz-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  content: "";
-  position: absolute;
-  left: 0;
-  z-index: 1;
-  width: 2rem;
-  height: 2rem;
-  border: 4px solid #66CCFF;
-}
-
-.checkbox-s:checked:before, .checkbox-r:checked:before{
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
- height: .5rem;
-  border-color: #009688;
-  border-top-style: none;
-  border-right-style: none;
-}
-
-.checkbox-s:after, .checkbox-r:after{
-  content: "";
-  position: absolute;
-  top: -0.125rem;
-  left: 0;
-  width: 1.1rem;
-  height: 1.1rem;
-  background: #fff;
-  cursor: pointer;
-}
+         .checkbox-s, .checkbox-r {
+         position: relative;
+         top: -0.375rem;
+         margin: 0 1rem 0 0;
+         cursor: pointer;
+         }
+         .checkbox-s:before {
+         -webkit-transition: all 0.3s ease-in-out;
+         -moz-transition: all 0.3s ease-in-out;
+         transition: all 0.3s ease-in-out;
+         content: "";
+         position: absolute;
+         left: 0;
+         z-index: 1;
+         width: 2rem;
+         height: 2rem;
+         border: 4px solid #66CCFF;
+         }
+         .checkbox-r:before {
+         -webkit-transition: all 0.3s ease-in-out;
+         -webkit-border-radius: 50px;
+         -moz-transition: all 0.3s ease-in-out;
+         transition: all 0.3s ease-in-out;
+         content: "";
+         position: absolute;
+         left: 0;
+         z-index: 1;
+         width: 2rem;
+         height: 2rem;
+         border: 4px solid #66CCFF;
+         }
+         .checkbox-s:checked:before, .checkbox-r:checked:before{
+         -webkit-transform: rotate(-45deg);
+         -moz-transform: rotate(-45deg);
+         -ms-transform: rotate(-45deg);
+         -o-transform: rotate(-45deg);
+         transform: rotate(-45deg);
+         height: .8rem;
+         border-color: #009688;
+         border-top-style: none;
+         border-right-style: none;
+         }
+         .checkbox-s:after, .checkbox-r:after{
+         content: "";
+         position: absolute;
+         top: -0.125rem;
+         left: 0;
+         width: 1.1rem;
+         height: 1.1rem;
+         background: #fff;
+         cursor: pointer;
+         }
       </style>
    </head>
    <body>
       <div class="container">
          <h1>Hello <%= user.id%>, welcome to beamer</h1>
          <header class="clearfix">
-            Below you can easily build your profile
+            Build your profile
             <p style="margin-left:25em;"></p>
          </header>
-         <% catalogue.content.each do |category| %>
-         <div class="edit-dialog" id="edit-dialog-<%=category["id"]%>" title="Edit category" style="display:none">
-            <table width="100%">
-               <tr>
-                  <td valign="top">Category Details 
-                  </td>
-                  <td width="80" valign="top">
-                  </td>
-               </tr>
-            </table>
-         </div>
-         <% end %>
-         <div class="main">
+
+            <table align="center" width="80%">
+         <tr>
+            <td valign="top">
+
+            <div class="main">
             <ul id="cbp-ntaccordion" class="cbp-ntaccordion">
-               <% catalogue.content.each do |category| %> 					    
+               <% catalogue.content.each do |category| %>               
                <% if category["parent"] == "0" %>
                <li>
                   <h3 class="cbp-nttrigger" style="display:inline;">
                      <span style="width:350px;height:65px;display:inline-block">
                      <img id='img_<%=category["id"]%>' align="top" src="/icon/<%=category['id']%>.jpg" alt="cloth" 
-                        style="width:48px;height:48px;"> <%=category["name"]%>	
-                     </span>	
+                        style="width:48px;height:48px;"> <%=category["name"]%>  
+                     </span>  
                   </h3>
                   <% category_have = 'checked' if !user.profile[category["id"]].nil? && user.profile[category["id"]].include?("have") %>
                   <% category_need = 'checked' if !user.profile[category["id"]].nil? && user.profile[category["id"]].include?("need") %>
                   <input type="checkbox" id=<%= user.id%> name="have" value=<%=category["id"] %> class="checkbox-r" <%=category_have%>> &nbsp;&nbsp;
                   <input type="checkbox" id=<%= user.id%> name="need" value=<%=category["id"] %> class="checkbox-s" <%=category_need%>>
-
                   <div class="cbp-ntcontent">
                      <p></p>
                      <ul class="cbp-ntsubaccordion">
@@ -142,7 +134,7 @@
                         <% sub = catalogue.content[catalogue.content_hash[sub_id]] %>
                         <li>
                            <h4 class="cbp-nttrigger" style="display:inline;">
-                           <span style="width:350px;height:65px;display:inline-block">
+                              <span style="width:350px;height:65px;display:inline-block">
                               <img id='img_<%=sub["id"]%>' align="middle" src="/icon/<%=sub['id']%>.jpg" alt="cloth" style="width:48px;height:48px;"> <%=sub["name"]%>
                               </span>  
                            </h4>
@@ -176,5 +168,14 @@
                <% end %>
             </ul>
          </div>
+
+            </td>
+            <td width="30%" valign="top" align="left">
+            Selected campaigns for you 
+            </td>
+         </tr>
+      </table>
+
+         
       </div>
 </html>
