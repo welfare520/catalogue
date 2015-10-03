@@ -1,4 +1,5 @@
 require 'virtus'
+require './models/base_model'
 
 class User < BaseModel
 	include Virtus.model
