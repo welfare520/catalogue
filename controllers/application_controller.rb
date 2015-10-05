@@ -9,6 +9,13 @@ class ApplicationController < Sinatra::Application
   enable :sessions
   set :sessions, :expire_after => 2592000
 
+  configure do
+    Dir.mkdir('logs') unless File.exist?('logs')
+    file = File.new("logs/common.log", 'a+')
+    file.sync = true
+    use Rack::CommonLogger, file
+  end  
+
   helpers ApplicationHelpers
 
   helpers do
