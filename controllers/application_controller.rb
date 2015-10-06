@@ -28,6 +28,7 @@ class ApplicationController < Sinatra::Application
     end
 
     def catalogue
+      @catalogue ||= Catalogue.load_from_mongodb
       @catalogue ||= Catalogue.load_from_file("./data/catalogue.json")
     end
   end
@@ -70,6 +71,7 @@ class ApplicationController < Sinatra::Application
         category = Category.new(params)        
 
         catalogue.update_category(category)
+        catalogue.save_all
         catalogue.save_to_file("./data/catalogue.json") 
         halt 201, "saved"
       rescue Exception => e
@@ -84,6 +86,7 @@ class ApplicationController < Sinatra::Application
         :id =>  Random.rand(10000000000...99999999999).to_s 
         })
       catalogue.add_category(category)
+      catalogue.save_all
       catalogue.save_to_file("./data/catalogue.json") 
       halt 201, "created"
     end

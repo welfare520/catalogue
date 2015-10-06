@@ -14,5 +14,5 @@ class Category
 	attribute :parent, String
 	attribute :pic, String
 
-	attribute :status, String 
+	attribute :status, String, :default => 'active'
 end

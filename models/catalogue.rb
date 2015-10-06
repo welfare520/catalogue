@@ -3,7 +3,6 @@ require 'virtus'
 class Catalogue < BaseModel
 	include Virtus.model
 
-	attribute :content, Array
 	attribute :content_hash, Hash 
 
 	def self.load_from_file(file)
@@ -13,6 +12,13 @@ class Catalogue < BaseModel
 		catalogue = Catalogue.new(:content => category_content)
 		catalogue.add_children
 		catalogue 
+	end
+
+	def self.load_from_mongodb
+		catalogue = Catalogue.new
+		catalogue.load_active
+		catalogue.add_children
+		catalogue
 	end
 
 	def save_to_file(output_file)
@@ -47,6 +53,7 @@ class Catalogue < BaseModel
 	end
 
 	def add_children
+		clear_children
 		@content_hash = Hash[*content.map.with_index {|entry, index| [entry['id'], index]}.flatten]
 		content.each do |category|
 			p_index = content_hash[category["parent"]]
@@ -56,6 +63,12 @@ class Catalogue < BaseModel
 			end
 			category['children'] ||= []
 			category['children'].uniq! 
+		end
+	end
+
+	def clear_children
+		@content.each do |entry|
+			entry.delete('children')
 		end
 	end
 end
