@@ -18,7 +18,7 @@ class Catalogue < BaseModel
 		catalogue = Catalogue.new
 		catalogue.load_active
 		catalogue.add_children
-		catalogue
+		catalogue.content.empty? ? nil : catalogue
 	end
 
 	def save_to_file(output_file)
