@@ -17,23 +17,23 @@
       <script src="/js/jquery.cbpNTAccordion.min.js"></script>
       <script src="/js/modernizr.custom.js"></script>    
       <script src="/js/catalogue.js"></script> 
+      <script src="/js/common.js"></script> 
      <script>
         $(function() {
           $( "a" )
             .button()
             .click(function( event ) {
             });
-        });
+        });            
      </script>
-
    </head>
    <body>
-      <div class="container">
+
+   <div id="header"></div>
+      <div class="container">     
          <header class="clearfix">
             <h1>Catalogue Management</h1>
-            <p style="margin-left:25em;">Version 1.0   Last Modified: 2008-08-08</p>
-            <a href="users/login"><font size="4" color="green">Beamer</font></a>  
-            <a href="builder"><font size="4" color="green">Campaign</font></a>          
+            <p style="margin-left:25em;">Version 1.0   Last Modified: 2008-08-08</p>       
          </header>
          <% catalogue.content.each do |category| %>
          <div class="edit-dialog" id="edit-dialog-<%=category["id"]%>" title="Edit category" style="display:none">

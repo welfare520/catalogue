@@ -44,8 +44,20 @@ class ApplicationController < Sinatra::Application
       [404, 'Page Not Found']
     end
 
-    get do      
+    get do
+      erb :header
+    end
+
+    get 'catalogue' do      
         erb :catalogue, :locals => {:catalogue => catalogue}
+    end
+
+    get 'header' do
+      erb :header
+    end
+
+    get 'sidebar' do
+      erb :sidebar
     end
 
     get 'icon/:icon' do
