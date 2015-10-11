@@ -33,9 +33,9 @@ class ApplicationController < Sinatra::Application
     end
   end
 
-  # use Rack::Auth::Basic, "Restricted Area" do |username, password|
-  #   username == auth_config.user and password == auth_config.pass
-  # end
+  use Rack::Auth::Basic, "Restricted Area" do |username, password|
+    username == auth_config.user and password == auth_config.pass
+  end
 
   namespace '/' do
 
